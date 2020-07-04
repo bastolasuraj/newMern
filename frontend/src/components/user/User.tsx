@@ -1,28 +1,27 @@
 import React, {FC, useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
-import axios from "axios";
-// import {Container, Table} from "react-bootstrap";
+import {Users} from "../../@types/Users";
+import {config} from "../../config";
+import StorageService from "../../services/Storage";
+import {AxiosConfig} from "../../@types";
+import {fetchService} from "../../services";
 
 type Props = RouteComponentProps<any>
 
-interface User {
-    username: string
-    usertype: string
-    createdAt: string
-}
-
 const User: FC<Props> = (props: Props) => {
     const [user, setUser] = useState([])
-    const auth = sessionStorage.getItem('auth')
+    const auth = StorageService.get(config.AUTH_KEY)
     useEffect(() => {
-        let token
-        if (auth) {
-            token = JSON.parse(auth).accessToken
-            const baseURL = 'http://localhost:5000/api/users'
-            axios.get(baseURL,{headers:{'Authorization':`Bearer ${token}`}}).then(({data, status}) => {
-                setUser(data.data)
-            })
+        const params:AxiosConfig ={
+            url:"/users",
+            method:"GET"
         }
+        fetchService(params).then(({data})=>{
+            setUser(data)
+        }).catch(error=>{
+            console.log(error)
+        })
+
     }, [])
     return  (
         <table className='table table-bordered table-hover' >
@@ -34,7 +33,7 @@ const User: FC<Props> = (props: Props) => {
             </tr>
             </thead>
             <tbody>
-            {user.map((user:User,index)=>{
+            {user.map((user:Users, index)=>{
                 return (
                     <tr key={index}>
                         <td>{user.username}</td>

@@ -1,19 +1,13 @@
 import React, {FC, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
-import axios from "axios";
-
-interface UserLogin {
-    // firstname: string
-    // lastname: string
-    // email: string
-    username: string
-    password: string
-    usertype: string
-    // image: string
-}
+import {UserRegistration} from "../../@types/Users";
+import {config} from "../../config";
+import StorageService from "../../services/Storage";
+import {fetchService} from "../../services";
+import {AxiosConfig} from "../../@types";
 
 const Registration: FC<RouteComponentProps> = (props:RouteComponentProps) => {
-    const initialState: UserLogin = {
+    const initialState: UserRegistration = {
         // firstname: "",
         // lastname: "",
         // email: "",
@@ -23,12 +17,20 @@ const Registration: FC<RouteComponentProps> = (props:RouteComponentProps) => {
         // image: ""
     }
     const [formData, setFormData] = useState(initialState);
+    const [message, setMessage] = useState('');
     const userLogin = async () => {
         console.log("formData==", formData)
-        const baseURL = 'http://localhost:5000/api/registration'
-        const {data, status} = await axios.post(baseURL, formData)
-        if (status) {
-            sessionStorage.setItem('auth', JSON.stringify(data))
+        const params:AxiosConfig={
+            url:'/registration',
+            method:"POST",
+            data:formData,
+        }
+        const {data} = await fetchService(params)
+        if(data){
+            setMessage("Users Registration Successful")
+        }
+        if (data) {
+            StorageService.set(config.AUTH_KEY, JSON.stringify(data))
         }
         window.location.href = '/'
     }
@@ -38,6 +40,9 @@ const Registration: FC<RouteComponentProps> = (props:RouteComponentProps) => {
                 <div className="card-header">
                     User Registration Form
                 </div>
+                {message !=='' &&
+                <div className='alert alert-success'>{message}</div>
+                }
                 <form action="#" className="form">
                     <div className="card-body">
 

@@ -14,7 +14,7 @@ exports.createUser = (req, res) => {
         .save()
         .then((newUser) => {
             res.status(301).send({
-                message: "User Created Successfully",
+                message: "Users Created Successfully",
                 data: newUser,
             })
         })

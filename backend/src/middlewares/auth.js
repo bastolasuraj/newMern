@@ -23,7 +23,7 @@ exports.auth = (req, res, next)=>{
     }
     User.findById(payload.userId).then((user)=>{
         if(!user){
-            throw new Error("Not a registered User")
+            throw new Error("Not a registered Users")
         }
     })
 

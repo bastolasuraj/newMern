@@ -1,14 +1,10 @@
 import React, {FC, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
-import axios from "axios";
-
-// import {url} from "inspector";
-
-interface UserLogin {
-    username: string
-    password: string
-    // formData:UserLogin
-}
+import {UserLogin} from "../../@types/Users";
+import {config} from "../../config";
+import StorageService from "../../services/Storage";
+import {AxiosConfig} from "../../@types";
+import {fetchService} from "../../services";
 
 const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     const initialState: UserLogin = {
@@ -18,20 +14,16 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     }
     const [formData, setFormData] = useState(initialState);
     const userLogin = async () => {
-        console.log("formData==", formData)
-        const baseURL = 'http://localhost:5000/api/login'
-        const {data, status} = await axios.post(baseURL, formData)
-        if (status) {
-            sessionStorage.setItem('auth', JSON.stringify(data))
-            //     sessionStorage:setI
+        const params:AxiosConfig ={
+            url:"/login",
+            method:"POST",
+            data:formData,
+        }
+        const {data} = await fetchService(params)
+        if (data) {
+            StorageService.set(config.AUTH_KEY, JSON.stringify(data))
         }
         window.location.href = '/'
-        // const response = await axios.get("http://localhost:5000/api/users", {
-        //     headers:{
-        //         'authorization':`Bearer ${data.accessToken}`
-        //     }
-        // })
-        // console.log("res=",response.data)
     }
     return (
         <div className="container">

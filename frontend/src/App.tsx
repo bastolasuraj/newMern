@@ -8,7 +8,7 @@ import Header from "./components/layouts/Header";
 import Dashboard from "./components/dashboard/index";
 // import Cards from "./components/dashboard/Cards";
 import Login from "./components/user/Login";
-// import User from "./components/user/User";
+// import Users from "./components/user/Users";
 import PageNotFound from "./components/PageNotFound";
 import UserRoutes from "./components/user/UserRoutes";
 import Registration from "./components/user/Registration";

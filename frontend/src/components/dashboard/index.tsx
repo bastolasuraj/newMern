@@ -13,7 +13,7 @@ interface User {
 // interface State {
 //     chartData: any;
 //     cardData: any;
-//     tableData: User[];
+//     tableData: Users[];
 // }
 
 
