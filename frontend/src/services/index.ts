@@ -19,19 +19,25 @@ const getHeaders = () => {
     }
 }
 export const fetchService = async (axiosConfig: AxiosConfig) => {
+    try {
 
-    const requestParams = {
-        baseURL: config.BASE_URL,
-        headers: {...axiosConfig.headers, ...getHeaders()},
-        ...axiosConfig
-    }
-    const response =await axios(requestParams);
-    const {data, status} = response
-    if(data){
-        return {
-            data, status
+        const requestParams = {
+            baseURL: config.BASE_URL,
+            headers: {...axiosConfig.headers, ...getHeaders()},
+            ...axiosConfig
         }
-    }else {
-        throw new Error("Error")
+        const response = await axios(requestParams);
+        const {data, status} = response
+        if (data) {
+            return {
+                data, status
+            }
+        } else {
+            throw new Error("Error")
+        }
+    } catch (e) {
+        return {
+            data:e.data, status:e.status
+        }
     }
 }

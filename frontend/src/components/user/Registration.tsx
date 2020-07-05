@@ -32,7 +32,7 @@ const Registration: FC<RouteComponentProps> = (props:RouteComponentProps) => {
         if (data) {
             StorageService.set(config.AUTH_KEY, JSON.stringify(data))
         }
-        window.location.href = '/'
+        props.history.push(`/login?message=${message}`)
     }
     return (
         <div className="container">

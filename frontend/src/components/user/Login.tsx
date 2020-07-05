@@ -5,6 +5,7 @@ import {config} from "../../config";
 import StorageService from "../../services/Storage";
 import {AxiosConfig} from "../../@types";
 import {fetchService} from "../../services";
+import * as queryString from "querystring";
 
 const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     const initialState: UserLogin = {
@@ -13,18 +14,22 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         // formData:
     }
     const [formData, setFormData] = useState(initialState);
+
     const userLogin = async () => {
-        const params:AxiosConfig ={
-            url:"/login",
-            method:"POST",
-            data:formData,
+        const params: AxiosConfig = {
+            url: "/login",
+            method: "POST",
+            data: formData,
         }
+
         const {data} = await fetchService(params)
         if (data) {
             StorageService.set(config.AUTH_KEY, JSON.stringify(data))
         }
-        window.location.href = '/'
+        const query:any = queryString.parse(props.location.search)
+        props.history.push(query.redirectUrl)
     }
+
     return (
         <div className="container">
             <div className="card login-card sb-card">
