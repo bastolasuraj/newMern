@@ -30,8 +30,7 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         props.history.push(query.redirectUrl)
     }
 
-    return (
-        <div className="container">
+    return (<div className="container">
             <div className="card login-card sb-card">
                 <div className="card-header">
                     Login
@@ -75,7 +74,6 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
                 </form>
 
             </div>
-        </div>
-    )
+        </div>)
 };
 export default Login;
