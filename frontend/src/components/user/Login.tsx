@@ -26,11 +26,12 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         if (data) {
             StorageService.set(config.AUTH_KEY, JSON.stringify(data))
         }
-        const query:any = queryString.parse(props.location.search)
+        const query: any = queryString.parse(props.location.search)
         props.history.push(query.redirectUrl)
     }
 
-    return (<div className="container">
+    return (
+        <div className="container">
             <div className="card login-card sb-card">
                 <div className="card-header">
                     Login
@@ -74,6 +75,7 @@ const Login: FC<RouteComponentProps> = (props: RouteComponentProps) => {
                 </form>
 
             </div>
-        </div>)
+        </div>
+    )
 };
 export default Login;

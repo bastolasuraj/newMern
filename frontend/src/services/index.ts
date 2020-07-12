@@ -16,6 +16,7 @@ const getHeaders = () => {
         return {
             'Content-type': 'application/json',
         }
+
     }
 }
 export const fetchService = async (axiosConfig: AxiosConfig) => {
@@ -37,7 +38,8 @@ export const fetchService = async (axiosConfig: AxiosConfig) => {
         }
     } catch (e) {
         return {
-            data:e.data, status:e.status
+            data: e.data, status: e.status
         }
     }
 }
+
